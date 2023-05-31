@@ -10,7 +10,7 @@ var socketIOClient = require('socket.io-client');
 var client = socketIOClient.connect('http://localhost:3000');
 
 app.get('/', (req, res) => {
-  res.send('<h1>A Basic Node.JS Server</h1>');
+  res.send('<h1>Basic Socket.IO Server</h1>');
 });
 
 app.use(express.json());
