@@ -13,16 +13,24 @@ app.get('/', (req, res) => {
   res.send('<h1>A Basic Node.JS Server</h1>');
 });
 
+app.use(express.json());
+app.post('/triggerEvent', (req, res) => {
+    io.emit('benchmark', req.body);
+    res.json(req.body);
+});
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 });
 
 app.get('/triggerEvent', (req, res) => {   
-    io.emit('benchmark', { message: 'Hello from Benchmark Server' });
+    io.emit('benchmark', req.body);
     res.send('<h1>Event triggered</h1>');
 });
-client.on('benchmark', (socket) => {    
-    console.log('benchmark event received : ' + socket.message);
+
+client.on('benchmark', (data) => {    
+    console.log('event received');
+    console.log(data);
 });
 
 server.listen(3000, () => {
